@@ -1,8 +1,9 @@
 package main;
 
-import impl.NumericTimeSeriesImpl;
-import impl.TimeSeriesImp;
+import impl.*;
 import interfaces.StockData;
+import interfaces.StockDataLoader;
+import interfaces.StockHistory;
 
 import java.text.ParseException;
 
@@ -11,13 +12,17 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 
-        loadNumericTimeSeriesData();
+
+        StockDataLoader loader = new StockDataLoaderImpl();
+        loader.loadStockDataDir("/home/aqar/Downloads/resources (1)/Resources/data/real");
+
+
 
     }
 
     public static void loadTimeSeriesData() throws ParseException {
+        StockHistory stockHistory = new StockHistoryImp();
         TimeSeriesImp<StockData> timeSeries = Helpers.readTimeSeriesData("C1.csv");
-        Helpers.traverse(timeSeries.getDataPointsInRange(Helpers.getDateFromString("2024-01-01"),Helpers.getDateFromString("2024-01-03")));
 
     }
 

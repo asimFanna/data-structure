@@ -1,11 +1,9 @@
 package main;
 
 import impl.NumericTimeSeriesImpl;
+import impl.StockHistoryImp;
 import impl.TimeSeriesImp;
-import interfaces.DLL;
-import interfaces.DataPoint;
-import interfaces.Node;
-import interfaces.StockData;
+import interfaces.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,15 +16,16 @@ import java.util.Locale;
 
 public class Helpers {
 
-    public static <T> void traverse (DLL<T> list) {
-       list.findFirst();
-       System.out.println("Size:" + list.size());
-        while (!list.last()){
+    public static <T> void traverse(DLL<T> list) {
+        list.findFirst();
+        System.out.println("Size:" + list.size());
+        while (!list.last()) {
             System.out.println(list.retrieve());
             list.findNext();
         }
         System.out.println(list.retrieve());
     }
+
     public static TimeSeriesImp<StockData> readTimeSeriesData(String fileName) {
         TimeSeriesImp<StockData> timeSeries = new TimeSeriesImp<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -43,6 +42,27 @@ public class Helpers {
 
         return timeSeries;
     }
+
+    public static StockHistory readStockHistory(String path) {
+        StockHistory stockHistory = new StockHistoryImp();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            // skipping first line cuase it is columns header
+            String line = br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                StockData stockData = new StockData(Double.parseDouble(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), Double.parseDouble(values[4]), Long.parseLong(values[5]));
+                stockHistory.addStockData(getDateFromString(values[0]), stockData);
+                String [] pathArray = path.split("/");
+                stockHistory.SetCompanyCode(pathArray[pathArray.length-1]);
+            }
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return stockHistory;
+    }
+
+
     public static NumericTimeSeriesImpl readTimeNumericSeriesData(String fileName) {
         NumericTimeSeriesImpl timeSeries = new NumericTimeSeriesImpl();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -50,7 +70,7 @@ public class Helpers {
             String line = br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                DataPoint<Double> dt = new DataPoint<> (getDateFromString(values[0]),Double.parseDouble(values[4]));
+                DataPoint<Double> dt = new DataPoint<>(getDateFromString(values[0]), Double.parseDouble(values[4]));
                 timeSeries.addDataPoint(dt);
             }
         } catch (IOException | ParseException e) {
@@ -62,7 +82,7 @@ public class Helpers {
 
     public static Date getDateFromString(String date) throws ParseException {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        return  format.parse(date);
+        return format.parse(date);
 
     }
 
@@ -84,7 +104,6 @@ public class Helpers {
             index = index.next;
         }
     }
-
 
 
 }
