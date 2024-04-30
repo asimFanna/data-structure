@@ -19,11 +19,10 @@ public class NumericTimeSeriesImpl extends TimeSeriesImp<Double> implements Nume
             }
             value /=period;
             movingAverageList.insert(value);
-            movingAverageList.sort(true);
             dataPointsList.findPrevious();
         }
 
-        Helpers.sortDataPoints(true, dataPointsList.head);
+        Helpers.sortDataPoints(true, dataPointsList);
         return this;
     }
 

@@ -22,7 +22,7 @@ public class StockDataLoaderImpl implements StockDataLoader {
         if(listOfFiles==null) return dataSet;
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                dataSet.addStockHistory(loadStockDataFile(file.getPath()));
+                System.out.println("Added "+file.getName()+" :"+dataSet.addStockHistory(loadStockDataFile(file.getPath()))+"");;
                 System.out.println(file.getName() + " Loaded");
             }
         }

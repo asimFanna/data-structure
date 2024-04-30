@@ -26,6 +26,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
                 innerIndex = innerIndex.next;
             }
             index = index.next;
+            current = index;
         }
     }
 

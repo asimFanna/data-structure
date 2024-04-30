@@ -1,5 +1,6 @@
 package main;
 
+import impl.DLLCompImp;
 import impl.NumericTimeSeriesImpl;
 import impl.StockHistoryImp;
 import impl.TimeSeriesImp;
@@ -86,9 +87,9 @@ public class Helpers {
 
     }
 
-    public static <T> void sortDataPoints(boolean increasing, Node<DataPoint<T>> head) {
+    public static <T> void sortDataPoints(boolean increasing, DLLCompImp<DataPoint<T>> list) {
         //bubble sort
-        Node<DataPoint<T>> index = head;
+        Node<DataPoint<T>> index = list.head;
         while (index != null) {
             Node<DataPoint<T>> innerIndex = index.next;
             while (innerIndex != null) {
@@ -100,6 +101,8 @@ public class Helpers {
                     index.value = temp;
                 }
                 innerIndex = innerIndex.next;
+                if(innerIndex!=null)
+                    list.current =innerIndex;
             }
             index = index.next;
         }

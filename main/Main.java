@@ -11,10 +11,10 @@ import java.text.ParseException;
 public class Main {
 
     public static void main(String[] args) throws ParseException {
+        loadNumericTimeSeriesData();
 
-
-        StockDataLoader loader = new StockDataLoaderImpl();
-        loader.loadStockDataDir("/home/aqar/Downloads/resources (1)/Resources/data/real");
+//        StockDataLoader loader = new StockDataLoaderImpl();
+//        loader.loadStockDataDir("/home/aqar/Downloads/resources (1)/Resources/data/real");
 
 
 
@@ -30,6 +30,7 @@ public class Main {
     public static void loadNumericTimeSeriesData() throws ParseException {
         NumericTimeSeriesImpl timeSeries = Helpers.readTimeNumericSeriesData("C1.csv");
         System.out.println(timeSeries.calculateMovingAverage(3).getMin());
+        System.out.println(timeSeries.calculateMovingAverage(3).getMax());
         Helpers.traverse(timeSeries.movingAverageList);
     }
 

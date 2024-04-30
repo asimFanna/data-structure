@@ -99,7 +99,8 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
             return false;
         }
 
-        p = new BSTNode<K, T>(key, data);
+        p = new BSTNode<>(key, data);
+        keys.insert(key);
         if (empty()) {
             root = current = p;
             return true;
@@ -117,7 +118,9 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
 
     @Override
     public boolean remove(K key) {
-        return false;
+        boolean result = remove_key(key);
+        if(result) keys.remove();
+        return result;
     }
 
     @Override
