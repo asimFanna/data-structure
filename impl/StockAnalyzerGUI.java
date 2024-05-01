@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -186,7 +185,7 @@ public class StockAnalyzerGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (loader == null) {
-					loader = new StockDataLoaderImpl();
+					loader = new StockDataLoaderImp();
 				}
 
 
@@ -332,7 +331,7 @@ public class StockAnalyzerGUI extends JFrame {
 
 			if (period != 0) {
 				org.jfree.data.time.TimeSeries ma = new org.jfree.data.time.TimeSeries("Moving Average");
-				NumericTimeSeries cp = new NumericTimeSeriesImpl();
+				NumericTimeSeries cp = new NumericTimeSeriesImp();
 				DLL<DataPoint<StockData>> allDataPoints = stockHistory.getTimeSeries().getAllDataPoints();
 				if (!allDataPoints.empty()) {
 					allDataPoints.findFirst();

@@ -7,8 +7,8 @@ import main.Helpers;
 
 import java.io.File;
 
-public class StockDataLoaderImpl implements StockDataLoader {
-    private final StockHistoryDataSet dataSet = new StockHistoryDataSetImpl();
+public class StockDataLoaderImp implements StockDataLoader {
+    private final StockHistoryDataSet dataSet = new StockHistoryDataSetImp();
     @Override
     public StockHistory loadStockDataFile(String fileName) {
        return Helpers.readStockHistory(fileName);

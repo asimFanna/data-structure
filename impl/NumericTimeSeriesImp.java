@@ -4,7 +4,7 @@ import interfaces.DataPoint;
 import interfaces.NumericTimeSeries;
 import main.Helpers;
 
-public class NumericTimeSeriesImpl extends TimeSeriesImp<Double> implements NumericTimeSeries {
+public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements NumericTimeSeries {
 
     public DLLCompImp<Double> movingAverageList = new DLLCompImp<>();
 

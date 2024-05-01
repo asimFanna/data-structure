@@ -1,7 +1,7 @@
 package main;
 
 import impl.DLLCompImp;
-import impl.NumericTimeSeriesImpl;
+import impl.NumericTimeSeriesImp;
 import impl.StockHistoryImp;
 import impl.TimeSeriesImp;
 import interfaces.*;
@@ -64,8 +64,8 @@ public class Helpers {
     }
 
 
-    public static NumericTimeSeriesImpl readTimeNumericSeriesData(String fileName) {
-        NumericTimeSeriesImpl timeSeries = new NumericTimeSeriesImpl();
+    public static NumericTimeSeriesImp readTimeNumericSeriesData(String fileName) {
+        NumericTimeSeriesImp timeSeries = new NumericTimeSeriesImp();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             // skipping first line cuase it is columns header
             String line = br.readLine();

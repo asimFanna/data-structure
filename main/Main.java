@@ -2,7 +2,6 @@ package main;
 
 import impl.*;
 import interfaces.StockData;
-import interfaces.StockDataLoader;
 import interfaces.StockHistory;
 
 import java.text.ParseException;
@@ -28,7 +27,7 @@ public class Main {
 
 
     public static void loadNumericTimeSeriesData() throws ParseException {
-        NumericTimeSeriesImpl timeSeries = Helpers.readTimeNumericSeriesData("C1.csv");
+        NumericTimeSeriesImp timeSeries = Helpers.readTimeNumericSeriesData("C1.csv");
         System.out.println(timeSeries.calculateMovingAverage(3).getMin());
         System.out.println(timeSeries.calculateMovingAverage(3).getMax());
         Helpers.traverse(timeSeries.movingAverageList);

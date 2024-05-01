@@ -5,7 +5,7 @@ import interfaces.*;
 import java.util.Date;
 
 public class StockDataSetAnalyzerImp implements StockDataSetAnalyzer {
-    StockHistoryDataSet dataSet = new StockHistoryDataSetImpl();
+    StockHistoryDataSet dataSet = new StockHistoryDataSetImp();
     @Override
     public StockHistoryDataSet getStockHistoryDataSet() {
         return dataSet;

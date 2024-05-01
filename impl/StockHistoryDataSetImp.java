@@ -5,7 +5,7 @@ import interfaces.Map;
 import interfaces.StockHistory;
 import interfaces.StockHistoryDataSet;
 
-public class StockHistoryDataSetImpl implements StockHistoryDataSet {
+public class StockHistoryDataSetImp implements StockHistoryDataSet {
     Map<String, StockHistory> map = new BST<>();
 
     @Override
