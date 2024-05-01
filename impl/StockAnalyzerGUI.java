@@ -1,6 +1,7 @@
 package impl;
 
 import interfaces.*;
+import main.Helpers;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.event.ChangeEvent;
@@ -144,12 +146,13 @@ public class StockAnalyzerGUI extends JFrame {
 		}
 	}
 
-	public StockAnalyzerGUI() {
+	public StockAnalyzerGUI() throws ParseException {
 		setTitle("Stock Analyzer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setSize(screenSize.width, screenSize.height);
+		setSize(1000, 1000);
 
+		setResizable(true);
 		// Stock list
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
@@ -186,17 +189,12 @@ public class StockAnalyzerGUI extends JFrame {
 					loader = new StockDataLoaderImpl();
 				}
 
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				int result = fileChooser.showOpenDialog(StockAnalyzerGUI.this);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedDirectory = fileChooser.getSelectedFile();
-					System.out.println(selectedDirectory.getAbsolutePath());
-					stockHistoryDataSet = loader.loadStockDataDir(selectedDirectory.getAbsolutePath());
+
+					stockHistoryDataSet = loader.loadStockDataDir("./data/real");
 					sortMethod = SortMethod.Alpha;
 					sortStockList();
 					increasing = alphaIncreasing = true;
-				}
+
 			}
 		});
 		buttonPanel.add(stockLoadButton);
@@ -204,8 +202,13 @@ public class StockAnalyzerGUI extends JFrame {
 		// Date selectors
 		JLabel startDateLabel = new JLabel("Start: ");
 		buttonPanel.add(startDateLabel);
-		JSpinner startDateSpinner = new JSpinner(new SpinnerDateModel());
+		SpinnerDateModel dateModel = new SpinnerDateModel();
+		startDate = Helpers.getDateFromString("2020-01-01");
+
+		dateModel.setValue(startDate);
+		JSpinner startDateSpinner = new JSpinner(dateModel);
 		JSpinner.DateEditor startDateEditor = new JSpinner.DateEditor(startDateSpinner, "yyyy/MM/dd");
+
 		startDateSpinner.setEditor(startDateEditor);
 		startDateSpinner.addChangeListener(new ChangeListener() {
 			@Override
@@ -220,7 +223,10 @@ public class StockAnalyzerGUI extends JFrame {
 
 		JLabel endDateLabel = new JLabel("End: ");
 		buttonPanel.add(endDateLabel);
-		JSpinner endDateSpinner = new JSpinner(new SpinnerDateModel());
+		SpinnerDateModel endDateModel = new SpinnerDateModel();
+		endDate = Helpers.getDateFromString("2021-01-01");
+		endDateModel.setValue(endDate);
+		JSpinner endDateSpinner = new JSpinner(endDateModel);
 		JSpinner.DateEditor endDateEditor = new JSpinner.DateEditor(endDateSpinner, "yyyy/MM/dd");
 		endDateSpinner.setEditor(endDateEditor);
 		endDateSpinner.addChangeListener(new ChangeListener() {
@@ -374,7 +380,12 @@ public class StockAnalyzerGUI extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				StockAnalyzerGUI gui = new StockAnalyzerGUI();
+				StockAnalyzerGUI gui = null;
+				try {
+					gui = new StockAnalyzerGUI();
+				} catch (ParseException e) {
+					throw new RuntimeException(e);
+				}
 				gui.setVisible(true);
 			}
 		});
