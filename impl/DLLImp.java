@@ -27,13 +27,13 @@ public class DLLImp<T> implements DLL<T> {
     @Override
     public boolean first() {
         if (empty()) return false;
-        return current.previous == null;
+        return current.prev == null;
     }
 
     @Override
     public void findFirst() {
         current = head;
-        current.previous = null;
+        current.prev = null;
     }
 
     @Override
@@ -43,17 +43,17 @@ public class DLLImp<T> implements DLL<T> {
 
     @Override
     public void findPrevious() {
-            current = current.previous;
+            current = current.prev;
     }
 
     @Override
     public T retrieve() {
-        return current.value;
+        return current.data;
     }
 
     @Override
     public void update(T val) {
-        current.value = val;
+        current.data = val;
     }
 
     @Override
@@ -66,10 +66,10 @@ public class DLLImp<T> implements DLL<T> {
             return;
         }
         newNode.next = current.next;
-        newNode.previous = current;
+        newNode.prev = current;
 
         if (current.next != null)
-            current.next.previous = newNode;
+            current.next.prev = newNode;
 
         current.next = newNode;
         current = newNode;
@@ -80,15 +80,15 @@ public class DLLImp<T> implements DLL<T> {
         size--;
         if (current == head) {
             if (current.next != null)
-                current.next.previous = null;
+                current.next.prev = null;
             head = current = current.next;
             return;
         }
 
         if (current.next != null)
-            current.next.previous = current.previous;
-        if (current.previous != null)
-            current.previous.next = current.next;
+            current.next.prev = current.prev;
+        if (current.prev != null)
+            current.prev.next = current.next;
         current = current.next;
     }
 }

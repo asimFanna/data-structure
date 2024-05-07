@@ -93,12 +93,12 @@ public class Helpers {
         while (index != null) {
             Node<DataPoint<T>> innerIndex = index.next;
             while (innerIndex != null) {
-                boolean compareResult = increasing ? innerIndex.value.date.compareTo(index.value.date) < 0 : innerIndex.value.date.compareTo(index.value.date) > 0;
+                boolean compareResult = increasing ? innerIndex.data.date.compareTo(index.data.date) < 0 : innerIndex.data.date.compareTo(index.data.date) > 0;
                 if (compareResult) {
                     //swapping values
-                    DataPoint<T> temp = innerIndex.value;
-                    innerIndex.value = index.value;
-                    index.value = temp;
+                    DataPoint<T> temp = innerIndex.data;
+                    innerIndex.data = index.data;
+                    index.data = temp;
                 }
                 innerIndex = innerIndex.next;
                 if(innerIndex!=null)

@@ -28,11 +28,11 @@ public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements Numer
 
     @Override
     public DataPoint<Double> getMax() {
-        return dataPointsList.current.value;
+        return dataPointsList.current.data;
     }
 
     @Override
     public DataPoint<Double> getMin() {
-        return dataPointsList.head.value;
+        return dataPointsList.head.data;
     }
 }

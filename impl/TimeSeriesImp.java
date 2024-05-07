@@ -44,7 +44,7 @@ public class TimeSeriesImp<T> implements TimeSeries<T> {
     public Date getMinDate() {
         if (datesList.empty()) return null;
 
-        return datesList.head.value;
+        return datesList.head.data;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class TimeSeriesImp<T> implements TimeSeries<T> {
         if (datesList.empty()) return null;
 
 
-        return datesList.current.value;
+        return datesList.current.data;
     }
 
     @Override
@@ -93,15 +93,15 @@ public class TimeSeriesImp<T> implements TimeSeries<T> {
         Node<DataPoint<T>> index = dataPointsList.head;
 
         DLLImp<DataPoint<T>> newList = new DLLImp<>();
-        while (index != null && index.value!=null) {
+        while (index != null && index.data !=null) {
             if(endDate==null ){
-               if(  index.value.date.compareTo(startDate) >= 0 ){
-                   newList.insert(index.value);
+               if(  index.data.date.compareTo(startDate) >= 0 ){
+                   newList.insert(index.data);
                }
             }else {
-                if (index.value.date.compareTo(startDate) >= 0 && index.value.date.compareTo(endDate) <= 0) {
-                    newList.insert(index.value);
-                } else if (index.value.date.compareTo(endDate) > 0) {
+                if (index.data.date.compareTo(startDate) >= 0 && index.data.date.compareTo(endDate) <= 0) {
+                    newList.insert(index.data);
+                } else if (index.data.date.compareTo(endDate) > 0) {
                     /*
                      * Assuming List is sorted increasingly then we break the loop early if current data is grater than endDate
                      * */

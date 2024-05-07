@@ -16,12 +16,12 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
         while (index != null) {
             Node<T> innerIndex = index.next;
             while (innerIndex != null) {
-                boolean compareResult = increasing ? innerIndex.value.compareTo(index.value) < 0 : innerIndex.value.compareTo(index.value) > 0;
+                boolean compareResult = increasing ? innerIndex.data.compareTo(index.data) < 0 : innerIndex.data.compareTo(index.data) > 0;
                 if (compareResult) {
                     //swapping values
-                    T temp = innerIndex.value;
-                    innerIndex.value = index.value;
-                    index.value = temp;
+                    T temp = innerIndex.data;
+                    innerIndex.data = index.data;
+                    index.data = temp;
                 }
                 innerIndex = innerIndex.next;
             }
@@ -32,7 +32,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
 
     @Override
     public T getMax() {
-        if(!isIncreasing)return head.value;
+        if(!isIncreasing)return head.data;
 
         Node<T> index = current;
 
@@ -40,12 +40,12 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
             index = index.next;
 
 
-        return  index.value;
+        return  index.data;
     }
 
     @Override
     public T getMin() {
-        if(isIncreasing)return head.value;
+        if(isIncreasing)return head.data;
 
         Node<T> index = current;
 
@@ -53,7 +53,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
             index = index.next;
 
 
-        return  index.value;
+        return  index.data;
     }
 
 
@@ -64,10 +64,10 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
         Node<T> index = head;
         while (index!=null){
 
-            if(index.value.compareTo(query) == 0)
+            if(index.data.compareTo(query) == 0)
             {
                 current = index;
-                return  index.value;
+                return  index.data;
             }
             index = index.next;
         }
