@@ -1,38 +1,64 @@
 package impl;
 
+import interfaces.CompPair;
 import interfaces.DataPoint;
 import interfaces.NumericTimeSeries;
-import main.Helpers;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements NumericTimeSeries {
 
-    public DLLCompImp<Double> movingAverageList = new DLLCompImp<>();
+    public DLLCompImp<CompPair<DataPoint<Double>, Double>> movingAverageList = new DLLCompImp<>();
 
     @Override
     public NumericTimeSeries calculateMovingAverage(int period) {
-        dataPointsList.findFirst();
+        dates.findFirst();
         for (int i = 0; i < period; i++) {
             Double value = 0.0;
+            DataPoint<Double> point = new DataPoint<>(null, 0.0);
+            String sumVerificationString = "";
             for (int j = 0; j < period; j++) {
-                value += dataPointsList.retrieve().value;
-                if (j != period - 1) dataPointsList.findNext();
+                value += dates.retrieve().first.value;
+                if(j==0)
+                    sumVerificationString += dates.retrieve().first.value;
+                else
+                    sumVerificationString += " + "+ dates.retrieve().first.value;
+                if (j != period - 1) {
+
+                    dates.findNext();
+                }
             }
-            value /=period;
-            movingAverageList.insert(value);
-            dataPointsList.findPrevious();
+            point = dates.retrieve().first;
+
+            if (period - 1 != i)
+                dates.findPrevious();
+
+            value =new BigDecimal(value/period).setScale(2, RoundingMode.HALF_UP).doubleValue();
+            System.out.println(sumVerificationString+" /"+period+" = "+value);
+
+
+            movingAverageList.insert(new CompPair<>(new DataPoint<>(point.date, value), value));
+
+
         }
 
-        Helpers.sortDataPoints(true, dataPointsList);
+        movingAverageList.sort(true);
+
         return this;
     }
 
     @Override
     public DataPoint<Double> getMax() {
-        return dataPointsList.current.data;
+        if (movingAverageList.isIncreasing)
+            return movingAverageList.cur.data.first;
+        return movingAverageList.head.data.first;
     }
 
     @Override
     public DataPoint<Double> getMin() {
-        return dataPointsList.head.data;
+        if (movingAverageList.isIncreasing)
+            return movingAverageList.head.data.first;
+        return movingAverageList.cur.data.first;
     }
 }

@@ -28,9 +28,11 @@ public class Main {
 
     public static void loadNumericTimeSeriesData() throws ParseException {
         NumericTimeSeriesImp timeSeries = Helpers.readTimeNumericSeriesData("C1.csv");
-        System.out.println(timeSeries.calculateMovingAverage(3).getMin());
-        System.out.println(timeSeries.calculateMovingAverage(3).getMax());
+
+        timeSeries.calculateMovingAverage(3);
+
         Helpers.traverse(timeSeries.movingAverageList);
+
     }
 
 

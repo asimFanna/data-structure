@@ -1,16 +1,12 @@
 package impl;
 
-import interfaces.DLL;
-import interfaces.DataPoint;
-import interfaces.Node;
-import interfaces.TimeSeries;
+import interfaces.*;
 
 import java.util.Date;
 
 public class TimeSeriesImp<T> implements TimeSeries<T> {
 
-    public DLLCompImp<DataPoint<T>> dataPointsList = new DLLCompImp<>();
-    public DLLCompImp<Date> datesList = new DLLCompImp<>();
+    public DLLCompImp<CompPair<DataPoint<T>, Date>> dates = new DLLCompImp<>();
     private int size = 0;
 
     @Override
@@ -23,85 +19,101 @@ public class TimeSeriesImp<T> implements TimeSeries<T> {
         /*
          * we can use size variable or dataPointsList.empty();
          * */
-        return datesList.empty();
+        return dates.empty();
     }
 
     @Override
     public T getDataPoint(Date date) {
-        DataPoint<T> node = dataPointsList.find(new DataPoint<>(date, null));
+        CompPair<DataPoint<T>, Date> node = dates.find(new CompPair<>(null,date));
         if (node == null) return null;
 
-        return node.value;
+        return node.first.value;
     }
 
     @Override
     public DLL<Date> getAllDates() {
-        datesList.sort(true);
-        return datesList;
+
+        dates.sort(true);
+        DLL<Date> d=new DLLImp<Date>();
+
+        dates.findFirst();
+        for(int i=0;i<dates.size();i++) {
+            d.insert(dates.retrieve().second);
+            dates.findNext();
+
+        }
+        return d;
     }
 
     @Override
     public Date getMinDate() {
-        if (datesList.empty()) return null;
+        if (dates.empty()) return null;
 
-        return datesList.head.data;
+        return dates.head.data.second;
     }
 
     @Override
     public Date getMaxDate() {
-        if (datesList.empty()) return null;
+        if (dates.empty()) return null;
 
 
-        return datesList.current.data;
+        return dates.cur.data.second;
     }
 
     @Override
     public boolean addDataPoint(DataPoint<T> dataPoint) {
-        dataPointsList.insert(dataPoint);
-        datesList.insert(dataPoint.date);
+        dates.insert(new CompPair<>(dataPoint,dataPoint.date));
         size++;
         return true;
     }
 
     @Override
     public boolean updateDataPoint(DataPoint<T> dataPoint) {
-        DataPoint<T> found = dataPointsList.find(dataPoint);
+        CompPair<DataPoint<T>, Date> found = dates.find(new CompPair<>(dataPoint,dataPoint.date));
         if (found == null) return false;
-        found.date = dataPoint.date;
-        found.value = dataPoint.value;
+        found.first.date = dataPoint.date;
+        found.first.value = dataPoint.value;
         return true;
     }
 
     @Override
     public boolean removeDataPoint(Date date) {
-        DataPoint<T> found = dataPointsList.find(new DataPoint<>(date, null));
+        CompPair<DataPoint<T>, Date> found = dates.find(new CompPair<>(null,date));
         if (found == null) return false;
 
-        dataPointsList.remove();
+        dates.remove();
         size--;
         return true;
     }
 
     @Override
     public DLL<DataPoint<T>> getAllDataPoints() {
-        dataPointsList.sort(true);
-        return dataPointsList;
+        dates.sort(true);
+
+        DLL<DataPoint<T>> list = new DLLImp<>();
+        Node<CompPair<DataPoint<T>, Date>> i = dates.head;
+
+        while (i!=null){
+            list.insert(i.data.first);
+            i=i.next;
+        }
+        return list;
     }
 
     @Override
     public DLL<DataPoint<T>> getDataPointsInRange(Date startDate, Date endDate) {
-        Node<DataPoint<T>> index = dataPointsList.head;
+        Node<CompPair<DataPoint<T>, Date>> index = dates.head;
 
         DLLImp<DataPoint<T>> newList = new DLLImp<>();
         while (index != null && index.data !=null) {
             if(endDate==null ){
-               if(  index.data.date.compareTo(startDate) >= 0 ){
-                   newList.insert(index.data);
+               if(  index.data.first.date.compareTo(startDate) >= 0 ){
+                   newList.insert(index.data.first);
                }
             }else {
-                if (index.data.date.compareTo(startDate) >= 0 && index.data.date.compareTo(endDate) <= 0) {
-                    newList.insert(index.data);
-                } else if (index.data.date.compareTo(endDate) > 0) {
+                if (index.data.first.date.compareTo(startDate) >= 0 && index.data.first.date.compareTo(endDate) <= 0) {
+                    newList.insert(index.data.first);
+                } else if (index.data.first.date.compareTo(endDate) > 0) {
                     /*
                      * Assuming List is sorted increasingly then we break the loop early if current data is grater than endDate
                      * */

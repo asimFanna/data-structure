@@ -1,6 +1,5 @@
 package main;
 
-import impl.DLLCompImp;
 import impl.NumericTimeSeriesImp;
 import impl.StockHistoryImp;
 import impl.TimeSeriesImp;
@@ -23,6 +22,14 @@ public class Helpers {
         while (!list.last()) {
             System.out.println(list.retrieve());
             list.findNext();
+        }
+        System.out.println(list.retrieve());
+    }
+    public static <T> void traverseReverse(DLL<T> list) {
+        System.out.println("Size:" + list.size());
+        while (!list.first()) {
+            System.out.println(list.retrieve());
+            list.findPrevious();
         }
         System.out.println(list.retrieve());
     }
@@ -87,26 +94,6 @@ public class Helpers {
 
     }
 
-    public static <T> void sortDataPoints(boolean increasing, DLLCompImp<DataPoint<T>> list) {
-        //bubble sort
-        Node<DataPoint<T>> index = list.head;
-        while (index != null) {
-            Node<DataPoint<T>> innerIndex = index.next;
-            while (innerIndex != null) {
-                boolean compareResult = increasing ? innerIndex.data.date.compareTo(index.data.date) < 0 : innerIndex.data.date.compareTo(index.data.date) > 0;
-                if (compareResult) {
-                    //swapping values
-                    DataPoint<T> temp = innerIndex.data;
-                    innerIndex.data = index.data;
-                    index.data = temp;
-                }
-                innerIndex = innerIndex.next;
-                if(innerIndex!=null)
-                    list.current =innerIndex;
-            }
-            index = index.next;
-        }
-    }
 
 
 }

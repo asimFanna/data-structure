@@ -6,6 +6,7 @@ import interfaces.Node;
 public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DLLComp<T> {
 
 
+
     protected boolean isIncreasing;
 
     @Override
@@ -26,7 +27,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
                 innerIndex = innerIndex.next;
             }
             index = index.next;
-            current = index;
+            cur = index;
         }
     }
 
@@ -34,7 +35,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
     public T getMax() {
         if(!isIncreasing)return head.data;
 
-        Node<T> index = current;
+        Node<T> index = cur;
 
         while (index.next!=null)
             index = index.next;
@@ -47,7 +48,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
     public T getMin() {
         if(isIncreasing)return head.data;
 
-        Node<T> index = current;
+        Node<T> index = cur;
 
         while (index.next!=null)
             index = index.next;
@@ -66,7 +67,7 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
 
             if(index.data.compareTo(query) == 0)
             {
-                current = index;
+                cur = index;
                 return  index.data;
             }
             index = index.next;

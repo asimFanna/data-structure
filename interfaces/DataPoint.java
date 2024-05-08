@@ -3,7 +3,7 @@ package interfaces;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DataPoint<T>  implements Comparable<DataPoint<T>> {
+public class DataPoint<T>   {
     // The date of the data point .
     public Date date;
     // The value of the data point .
@@ -21,8 +21,5 @@ public class DataPoint<T>  implements Comparable<DataPoint<T>> {
     }
 
 
-    @Override
-    public int compareTo(DataPoint<T> dataPoint) {
-        return this.date.compareTo(dataPoint.date);
-    }
+
 }
