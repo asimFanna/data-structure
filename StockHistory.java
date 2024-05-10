@@ -1,5 +1,3 @@
-package interfaces;
-
 import java.util.Date;
 
 // Inerface representing the stock history of a given company .

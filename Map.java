@@ -1,5 +1,3 @@
-package interfaces;
-
 public interface Map<K extends Comparable<K>, T> {
     // Returns the number of e l e m e n t s in the map .
     int size();
@@ -34,6 +32,5 @@ public interface Map<K extends Comparable<K>, T> {
 // after calling this method ) . This method must be O ( log ( n ) ) in average .
     boolean remove(K key);
 
-    // Return all keys in the map as a list sorted in i n c r e a s i n g order .
     DLLComp<K> getKeys();
 }

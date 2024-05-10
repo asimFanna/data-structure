@@ -1,5 +1,3 @@
-package interfaces;
-
 // Represent stock date at a given date .
 public class StockData {
     public double open; // The opening price of the stock for that day
@@ -8,7 +6,7 @@ public class StockData {
     public double low; // The lowest price the stock reached during that day
     public long volume; // The number of shares that were traded during that day
 
-    public StockData(double open, double high, double low,double close, long volume) {
+    public StockData(double open, double high, double low, double close, long volume) {
         this.open = open;
         this.close = close;
         this.high = high;
@@ -16,5 +14,14 @@ public class StockData {
         this.volume = volume;
     }
 
-
+    @Override
+    public String toString() {
+        return "StockData{" +
+                "open=" + open +
+                ", close=" + close +
+                ", high=" + high +
+                ", low=" + low +
+                ", volume=" + volume +
+                '}';
+    }
 }

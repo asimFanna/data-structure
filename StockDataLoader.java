@@ -1,5 +1,3 @@
-package interfaces;
-
 public interface StockDataLoader {
 
     StockHistory loadStockDataFile(String fileName);

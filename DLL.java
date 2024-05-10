@@ -1,5 +1,3 @@
-package interfaces;
-
 public interface DLL<T> {
 
     // Returns the number of elements in the list .

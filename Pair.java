@@ -1,5 +1,3 @@
-package interfaces;
-
 public class Pair<U, V> {
     public U first;
 

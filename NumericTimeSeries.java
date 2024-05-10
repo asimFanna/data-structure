@@ -1,5 +1,3 @@
-package interfaces;
-
 // Time series of numeric ( double ) values .
 public interface NumericTimeSeries extends TimeSeries<Double> {
     // Calculates and returns the moving average of the data points over a specified

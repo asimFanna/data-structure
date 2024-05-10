@@ -1,9 +1,7 @@
-package interfaces;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DataPoint<T>   {
+public class DataPoint<T> {
     // The date of the data point .
     public Date date;
     // The value of the data point .
@@ -19,7 +17,6 @@ public class DataPoint<T>   {
         SimpleDateFormat dateFormat = new SimpleDateFormat(" yyyy -MM - dd ");
         return dateFormat.format(date) + "␣:␣ " + value.toString();
     }
-
 
 
 }

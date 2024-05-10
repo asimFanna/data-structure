@@ -1,13 +1,7 @@
-package impl;
-
-import interfaces.CompPair;
-import interfaces.DataPoint;
-import interfaces.NumericTimeSeries;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements NumericTimeSeries {
+public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements NumericTimeSeries{
 
     public DLLCompImp<CompPair<DataPoint<Double>, Double>> movingAverageList = new DLLCompImp<>();
 
@@ -20,10 +14,10 @@ public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements Numer
             String sumVerificationString = "";
             for (int j = 0; j < period; j++) {
                 value += dates.retrieve().first.value;
-                if(j==0)
+                if (j == 0)
                     sumVerificationString += dates.retrieve().first.value;
                 else
-                    sumVerificationString += " + "+ dates.retrieve().first.value;
+                    sumVerificationString += " + " + dates.retrieve().first.value;
                 if (j != period - 1) {
 
                     dates.findNext();
@@ -34,8 +28,8 @@ public class NumericTimeSeriesImp extends TimeSeriesImp<Double> implements Numer
             if (period - 1 != i)
                 dates.findPrevious();
 
-            value =new BigDecimal(value/period).setScale(2, RoundingMode.HALF_UP).doubleValue();
-            System.out.println(sumVerificationString+" /"+period+" = "+value);
+            value = new BigDecimal(value / period).setScale(2, RoundingMode.HALF_UP).doubleValue();
+            System.out.println(sumVerificationString + " /" + period + " = " + value);
 
 
             movingAverageList.insert(new CompPair<>(new DataPoint<>(point.date, value), value));

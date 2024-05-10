@@ -1,15 +1,9 @@
-package impl;
-
-import interfaces.DataPoint;
-import interfaces.StockData;
-import interfaces.StockHistory;
-import interfaces.TimeSeries;
-
 import java.util.Date;
 
-public class StockHistoryImp  implements StockHistory {
+public class StockHistoryImp implements StockHistory {
     private TimeSeriesImp<StockData> stockDataTimeSeries = new TimeSeriesImp<>();
     private String companyCode;
+
     @Override
     public int size() {
         return stockDataTimeSeries.size();
@@ -32,7 +26,7 @@ public class StockHistoryImp  implements StockHistory {
 
     @Override
     public void SetCompanyCode(String companyCode) {
-            this.companyCode = companyCode;
+        this.companyCode = companyCode;
     }
 
     @Override
@@ -47,7 +41,7 @@ public class StockHistoryImp  implements StockHistory {
 
     @Override
     public boolean addStockData(Date date, StockData stockData) {
-        return stockDataTimeSeries.addDataPoint(new DataPoint<>(date,stockData));
+        return stockDataTimeSeries.addDataPoint(new DataPoint<>(date, stockData));
     }
 
     @Override

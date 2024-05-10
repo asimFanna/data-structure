@@ -1,5 +1,3 @@
-package interfaces;
-
 import java.util.Date;
 
 // Interface representing a time series of data points .

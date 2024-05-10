@@ -1,10 +1,4 @@
-package impl;
-
-import interfaces.DLLComp;
-import interfaces.Node;
-
 public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DLLComp<T> {
-
 
 
     protected boolean isIncreasing;
@@ -13,9 +7,9 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
     public void sort(boolean increasing) {
         //bubble sort
         isIncreasing = increasing;
-        Node<T> index = head;
+        node<T> index = head;
         while (index != null) {
-            Node<T> innerIndex = index.next;
+            node<T> innerIndex = index.next;
             while (innerIndex != null) {
                 boolean compareResult = increasing ? innerIndex.data.compareTo(index.data) < 0 : innerIndex.data.compareTo(index.data) > 0;
                 if (compareResult) {
@@ -33,46 +27,44 @@ public class DLLCompImp<T extends Comparable<T>> extends DLLImp<T> implements DL
 
     @Override
     public T getMax() {
-        if(!isIncreasing)return head.data;
+        if (!isIncreasing) return head.data;
 
-        Node<T> index = cur;
+        node<T> index = head;
 
-        while (index.next!=null)
+        while (index.next != null)
             index = index.next;
 
-
-        return  index.data;
+        return index.data;
     }
 
     @Override
     public T getMin() {
-        if(isIncreasing)return head.data;
+        if (isIncreasing) return head.data;
 
-        Node<T> index = cur;
+        node<T> index = head;
 
-        while (index.next!=null)
+        while (index.next != null)
             index = index.next;
 
 
-        return  index.data;
+        return index.data;
     }
 
 
-    public T find (T query){
+    public T find(T query) {
         /*
          * Find node and make the current = foundedNode
          */
-        Node<T> index = head;
-        while (index!=null){
+        node<T> index = head;
+        while (index != null) {
 
-            if(index.data.compareTo(query) == 0)
-            {
+            if (index.data.compareTo(query) == 0) {
                 cur = index;
-                return  index.data;
+                return index.data;
             }
             index = index.next;
         }
-        return  null;
+        return null;
     }
 
 

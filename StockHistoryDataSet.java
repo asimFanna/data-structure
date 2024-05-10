@@ -1,5 +1,3 @@
-package interfaces;
-
 public interface StockHistoryDataSet {
     int size();
 

@@ -1,38 +1,5 @@
-package impl;
-
-import interfaces.DLLComp;
-import interfaces.Map;
-
 public class BST<K extends Comparable<K>, T> implements Map<K, T> {
-    public static class BSTNode<K, T> {
-        public T data;
-        public K key;
-        public BSTNode<K, T> left, right;
-
-        public BSTNode(K k, T val) {
-            this.data = val;
-            this.key = k;
-        }
-    }
-
-    public static class BooleanWrapper {
-
-        boolean value;
-
-        public BooleanWrapper(boolean val) {
-            this.value = val;
-        }
-
-        public boolean get() {
-            return this.value;
-        }
-
-        public void set(boolean val) {
-            this.value = val;
-        }
-    }
-
-    BSTNode<K, T> root, current;
+    public BSTNode<K, T> root, current;
     DLLCompImp<K> keys = new DLLCompImp<>();
 
     @Override
@@ -61,11 +28,9 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
         current.data = val;
     }
 
-
     @Override
     public boolean find(K tkey) {
         BSTNode<K, T> p = root, q = root;
-
         if (empty())
             return false;
 
@@ -84,10 +49,27 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
         return false;
     }
 
-
     @Override
-    public int nbKeyComp(K key) {
-        return 0;
+    public int nbKeyComp(K tkey) {
+        BSTNode<K, T> p = root, q = root;
+        int moves = 0;
+        if (empty())
+            return 0;
+
+        while (p != null) {
+            q = p;
+            if (p.key.compareTo(tkey) == 0) {
+                current = p;
+                return moves;
+            } else if (tkey.compareTo(p.key) < 0)
+                p = p.left;
+            else
+                p = p.right;
+
+            moves++;
+        }
+        current = q;
+        return moves;
     }
 
     @Override
@@ -115,11 +97,10 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
         }
     }
 
-
     @Override
     public boolean remove(K key) {
         boolean result = remove_key(key);
-        if(result) keys.remove();
+        if (result) keys.remove();
         return result;
     }
 
@@ -127,7 +108,6 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
     public DLLComp<K> getKeys() {
         return keys;
     }
-
 
     private boolean remove_key(K tkey) {
         BooleanWrapper removed = new BooleanWrapper(false);
@@ -172,6 +152,34 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
         }
 
         return p;
+    }
+
+    public static class BSTNode<K, T> {
+        public T data;
+        public K key;
+        public BSTNode<K, T> left, right;
+
+        public BSTNode(K k, T val) {
+            this.data = val;
+            this.key = k;
+        }
+    }
+
+    public static class BooleanWrapper {
+
+        boolean value;
+
+        public BooleanWrapper(boolean val) {
+            this.value = val;
+        }
+
+        public boolean get() {
+            return this.value;
+        }
+
+        public void set(boolean val) {
+            this.value = val;
+        }
     }
 }
 
